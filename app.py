@@ -5,7 +5,7 @@ from models import db, connect_db, User, Post
 from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///Blogly'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.debug = True
@@ -23,7 +23,7 @@ with app.app_context():
 def get_home_page():
     """"Render homepage with 5 most recent posts"""
     posts = Post.query.order_by(Post.created_at.desc()).limit(5).all()
-    return render_template('homepage.html', posts=posts)
+    return render_template('homepage.html')
 
 
 

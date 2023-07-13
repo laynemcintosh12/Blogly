@@ -4,6 +4,12 @@ import datetime
 
 db = SQLAlchemy()
 
+def connect_db(app):
+    """Connect to database."""
+    db.app = app
+    db.init_app(app)
+
+
 class User(db.Model):
     """Users Database Models"""
     __tablename__ = "users"
@@ -18,7 +24,7 @@ class User(db.Model):
     pro_pic = db.Column(db.Text, 
                         default='https://i.stack.imgur.com/l60Hf.png')
     
-    posts = db.relationship("Post", backref="user", cascade="all, delete-orphan")
+    posts = db.relationship("posts", backref="users", cascade="all, delete-orphan")
 
     def __repr__(self):
         """Show info about a User"""
@@ -45,7 +51,7 @@ class Post(db.Model):
                            nullable=False,
                            default=datetime.datetime.now)
     user_id = db.Column(db.Integer,
-                        db.ForeignKey('Users.id'),
+                        db.ForeignKey('users.id'),
                         nullable=False)
     
     @property
@@ -54,7 +60,3 @@ class Post(db.Model):
         return self.created_at.strftime("%a %b %-d  %Y, %-I:%M %p")
     
 
-def connect_db(app):
-    """Connect to database."""
-    db.app = app
-    db.init_app(app)
