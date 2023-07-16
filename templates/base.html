@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blogly</title>
+    <link rel="stylesheet" href="/static/app.css" />
 </head>
 <body>
-    {% block content %}
-    {% endblock %}
+    <nav class="navBar">
+        <a class="navElem" href="/">Home</a>
+        <a class="navElem" href="/users">Users</a>
+        <div class="alignMiddle">
+            <h1>Blogly</h1>
+        </div>
+    </nav>
+    <div class="pageContent">
+        {% block content %}
+        {% endblock %}
+    </div>
 </body>
 </html>

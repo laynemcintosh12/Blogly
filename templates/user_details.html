@@ -1,20 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>{{ user.full_name }}</h1>
-<form>
-        <button formaction="/users/{{ user.id }}/edit" formmethod="GET">Edit</button>
-        <button formaction="/users/{{ user.id }}/delete" formmethod="POST">Delete</button>
-</form>
-<h3>Posts</h3>
-<ul>
-{% for post in user.posts %}
-    <li>
-        <a href="/posts/{{ post.id}}">{{ post.title }}</a>
-        <small>{{ post.friendly_date }}</small>
-    </li>
-{% endfor %}
-</ul>
-<p><a href="/users/{{ user.id }}/posts/new">Add Post</a></p>
+<div class="div_container">
+    {% if user.pro_pic %}
+    <div class="pro_pic_div">
+        <img src="{{ user.pro_pic }}"
+            alt="{{ user.full_name }}"
+            class="pro_pic">
+    </div>
+    {% endif %}
+    <div class="user_details">
+        <h1>{{ user.full_name }}</h1>
+        <form>
+                <button formaction="/users/{{ user.id }}/edit" formmethod="GET">Edit</button>
+                <button id="delete" formaction="/users/{{ user.id }}/delete" formmethod="POST">Delete</button>
+        </form>
+        <h3>Posts</h3>
+        <ul>
+        {% for post in user.posts %}
+            <li>
+                <a href="/posts/{{ post.id}}">{{ post.title }}</a>
+                <small>{{ post.friendly_date }}</small>
+            </li>
+        {% endfor %}
+        </ul>
+        <a class="button" href="/users/{{ user.id }}/posts/new">Add Post</a>
+        <a class="button" href="/tags">Add Tags</a>
+    </div>
+</div>
 
 {% endblock %}

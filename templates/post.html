@@ -4,13 +4,22 @@
 <h1>{{ post.title }}</h1>
 <p>{{ post.content }}</p>
 <p><i>By {{ post.user.full_name }} on {{ post.friendly_date }}</i></p>
+{% if post.tags %}
+<p><b>Tags:</b>
+  {% for tag in post.tags %}
+  <a class="tag" href="/tags/{{ tag.id }}">{{ tag.name }}</a>
+  {% endfor %}
+</p>
+{% endif %}
 <form>
-  <button formmethod="GET"
-          formaction="/users/{{ post.user_id }}">Cancel</button>
-  <button formmethod="GET"
-          formaction="/posts/{{ post.id }}/edit">Edit</button>
-  <button formmethod="POST"
-          formaction="/posts/{{ post.id }}/delete">Delete</button>
+<div class="submitOrCancel">
+        <button formmethod="GET" 
+                formaction="/users/{{ post.user_id }}">Cancel</button>
+        <button formmethod="GET" 
+                formaction="/posts/{{ post.id }}/edit">Edit</button>
+        <button id="delete" formmethod="POST" 
+                formaction="/posts/{{ post.id }}/delete">Delete</button>
+</div>
 </form>
 
 {% endblock %}

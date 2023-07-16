@@ -24,7 +24,7 @@ class User(db.Model):
     pro_pic = db.Column(db.Text, 
                         default='https://i.stack.imgur.com/l60Hf.png')
     
-    posts = db.relationship("posts", backref="users", cascade="all, delete-orphan")
+    posts = db.relationship("Post", backref="user", cascade="all, delete-orphan")
 
     def __repr__(self):
         """Show info about a User"""
@@ -38,7 +38,7 @@ class User(db.Model):
 
 class Post(db.Model):
     """Posts Database Model"""
-    ___tablename__ = "posts"
+    __tablename__ = "posts"
 
     id = db.Column(db.Integer,
                     primary_key=True,
@@ -60,3 +60,32 @@ class Post(db.Model):
         return self.created_at.strftime("%a %b %-d  %Y, %-I:%M %p")
     
 
+class PostTag(db.Model):
+    """Connects Post model to Tags model"""
+
+    __tablename__ = "posts_tags"
+
+    post_id = db.Column(db.Integer,
+                        db.ForeignKey('posts.id'),
+                        primary_key=True)
+    tag_id = db.Column(db.Integer,
+                       db.ForeignKey('tags.id'),
+                       primary_key=True)
+    
+
+class Tag(db.Model):
+    """Tags data model"""
+    __tablename__ = "tags"
+
+    id = db.Column(db.Integer, 
+                   primary_key=True)
+    name = db.Column(db.Text, 
+                     nullable=False, 
+                     unique=True)
+
+    posts = db.relationship(
+        'Post',
+        secondary="posts_tags",
+        cascade="all,delete",
+        backref="tags",
+    )
